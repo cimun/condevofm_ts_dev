@@ -32,6 +32,7 @@ dependencies = [
     "foobench",
     "condevo",
     "ovito",
+    "sella",
 ]
 
 [tool.setuptools]

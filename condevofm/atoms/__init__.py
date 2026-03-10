@@ -18,6 +18,7 @@ from .constrain import (
 )
 from .evaluate import evaluate_population_with_calc, get_potential_energy
 from .optimize import Optimizer
+from .ts import check_saddle_point, get_lowest_eigenvalue, minimize_eigenval
 
 __all__ = [
     "atoms_list_to_solutions",
@@ -33,4 +34,7 @@ __all__ = [
     "evaluate_population_with_calc",
     "get_potential_energy",
     "Optimizer",
+    "check_saddle_point",
+    "get_lowest_eigenvalue",
+    "minimize_eigenval",
 ]
