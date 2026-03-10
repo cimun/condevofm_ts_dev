@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools >= 61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "condevofm"
+version = "0.0.1"
+authors = [
+    { name="Alexander Adel", email="alexander.adel@tuwien.ac.at" },
+]
+description = "CondEvo for materials."
+readme = "README.md"
+requires-python = ">=3.6"
+dependencies = [
+    "torch >= 2.0",
+    "numpy",
+    "scipy",
+    "tqdm",
+    "argh",
+    "h5py",
+    "pandas",
+    "matplotlib",
+    "jupyter",
+    "pyyaml",
+    "scikit-learn",
+    "imageio",
+    "ipykernel",
+    "seaborn",
+    "ase",
+    "mace-torch",
+    "foobench",
+    "condevo",
+    "ovito",
+]
+
+[tool.setuptools]
+py-modules = ["condevofm"]
