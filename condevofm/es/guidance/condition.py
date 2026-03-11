@@ -27,6 +27,11 @@ class BaseCondition(Condition, ABC):
         pass
 
     def evaluate(self, charles_instance, x, *args, **kwargs):
+        is_tensor = isinstance(x, Tensor)
+        device = x.device if is_tensor else None
+        if is_tensor:
+            x = x.detach().cpu().numpy()
+
         rc = np.zeros(len(x))
 
         # Get positions (x,y,z) for every atom of every cluster
@@ -43,12 +48,13 @@ class BaseCondition(Condition, ABC):
         rc[g0[:]] = 1.0
         rc[~g0[:]] = -1.0
 
-        if isinstance(x, Tensor):
-            return tensor(rc, device=x.device, dtype=float64)
+        if is_tensor:
+            return tensor(rc, device=device, dtype=float64)
         return rc
 
     def sample(self, charles_instance, num_samples):
-        return ones(num_samples, dtype=float64) * self.target
+        device = getattr(charles_instance, "device", None)
+        return ones(num_samples, dtype=float64, device=device) * self.target
 
     def to_dict(self):
         return {"target": self.target, **Condition.to_dict(self)}

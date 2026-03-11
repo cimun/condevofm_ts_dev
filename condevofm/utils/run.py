@@ -405,10 +405,10 @@ def run_evo(
             )
 
         samples = (
-            samples.numpy() if not isinstance(samples, np.ndarray) else samples
+            samples.detach().cpu().numpy() if not isinstance(samples, np.ndarray) else samples
         )
         fitness = (
-            fitness.numpy() if not isinstance(fitness, np.ndarray) else fitness
+            fitness.detach().cpu().numpy() if not isinstance(fitness, np.ndarray) else fitness
         )
         model_loss = np.array(model_loss)
 

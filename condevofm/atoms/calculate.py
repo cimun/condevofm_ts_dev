@@ -11,6 +11,7 @@ import numpy as np
 import torch
 from ase import Atoms
 from ase.calculators.lj import LennardJones
+from ase.calculators.morse import MorsePotential
 from mace.calculators import MACECalculator
 from tqdm import tqdm
 
@@ -19,6 +20,8 @@ def init_calc(calc_str, device="cpu"):
     calc = None
     if calc_str == "LJ":
         calc = LennardJones(sigma=1 / (2 ** (1.0 / 6.0)), rc=10.0, smooth=True)
+    elif calc_str == "Morse":
+        calc = MorsePotential(epsilon=1.0, r0=1.0, rho0=14)
     else:
         calc = MACECalculator(
             model_paths=calc_str,
@@ -49,6 +52,8 @@ def sample_to_atoms(sample, free_atoms_template, free_indices=None):
         free_indices = free_atoms_template.info["indices"]
 
     n_free = len(free_atoms_template)
+    if isinstance(sample, torch.Tensor):
+        sample = sample.detach().cpu().numpy()
     reshaped = np.asarray(sample, dtype=float).reshape(n_free, 3)
     out = free_atoms_template.copy()
     out.set_positions(reshaped)
